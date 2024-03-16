@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 class Product {
   String name;
-  Double price;
+  int price;
   int inStock;
   
   Product({
