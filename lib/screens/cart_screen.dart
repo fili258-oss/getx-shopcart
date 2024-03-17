@@ -6,9 +6,7 @@ import 'package:getx_app/models/product.dart';
 class MyCartScreen extends StatelessWidget {
   MyCartScreen({super.key});
   final CartController cartController = Get.put(CartController());
-  final TextEditingController _taskTitleController = TextEditingController();
-  //var listProducts = cartController.getProductsInvetary();
-  
+        
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,30 +29,54 @@ class MyCartScreen extends StatelessWidget {
                       Product product = cartController.stockProductS[index];
                       return ListTile(
                         title: Text(product.name),
-                        
-                        trailing: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          child: const TextField(),
-                          
+                        subtitle: Text('Unidades disponibles: ${product.inStock}',
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.red),
                         ),
-                      );
-          
-                    },
-          
+                        trailing: IconButton(
+                        icon: const Icon(Icons.add_shopping_cart_rounded),
+                        onPressed: () {
+                          cartController.updateProduct(index);
+                        },
+                      ),
+                      );          
+                    },                                                  
                   ),
+                  
                 ) 
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _taskTitleController,
-                  decoration: InputDecoration(
-                    labelText: 'New task',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {},
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 249, 255, 223),                                          
+                        border: Border.all(width: 2,color: Colors.blue),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      
+                      width: 350,
+                      height: 80,
+                      alignment: Alignment.center,
+                      
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Total de productos:',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Obx(
+                            () => Text(
+                              '${cartController.totalProducts}',
+                              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                                      
                     ),
-                  ),
+                                    
+                  ],
                 ),
               ),
             ],
